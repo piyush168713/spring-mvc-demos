@@ -1,0 +1,23 @@
+Lecture- 110
+
+How Does Component Scan Work - Your Package Names are Different!
+
+Question
+
+How does component scan work in this example? You have different package names.
+
+You listed the component scan package as: com.luv2code.springdemo
+
+But the our MVC controllers are defined in com.luv2code.springdemo.mvc
+
+Answer
+For the Spring attribute:  base-package="com.luv2code.springdemo"
+
+Spring will recursively scan for components starting at the base package: "com.luv2code.springdemo"
+
+When I say "recursive", it means that Spring will start at the base package and scan all sub packages.
+
+The package com.luv2code.springdemo.mvc is a sub package because of naming structure,
+just like folders on a file system.
+
+As a result, it will be included in the scan.
