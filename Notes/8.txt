@@ -1,0 +1,140 @@
+Lecture- 156
+
+Regular Expression:
+
+What Are Regular Expressions?
+
+Regular expressions are a way to describe a set of strings based on common characteristics shared by each
+string in the set. They can be used to search, edit, or manipulate text and data. You must learn a specific
+syntax to create regular expressions — one that goes beyond the normal syntax of the Java programming language.
+Regular expressions vary in complexity, but once you understand the basics of how they're constructed, you'll
+be able to decipher (or create) any regular expression.
+
+This trail teaches the regular expression syntax supported by the java.util.regex API and presents several
+working examples to illustrate how the various objects interact. In the world of regular expressions, there
+are many different flavors to choose from, such as grep, Perl, Tcl, Python, PHP, and awk. The regular
+expression syntax in the java.util.regex API is most similar to that found in Perl.
+
+
+
+How Are Regular Expressions Represented in This Package?
+
+The java.util.regex package primarily consists of three classes: Pattern, Matcher, and PatternSyntaxException.
+
+- A Pattern object is a compiled representation of a regular expression. The Pattern class provides no public
+constructors. To create a pattern, you must first invoke one of its public static compile methods, which will
+then return a Pattern object. These methods accept a regular expression as the first argument; the first few
+lessons of this trail will teach you the required syntax.
+- A Matcher object is the engine that interprets the pattern and performs match operations against an input
+string. Like the Pattern class, Matcher defines no public constructors. You obtain a Matcher object by invoking
+the matcher method on a Pattern object.
+- A PatternSyntaxException object is an unchecked exception that indicates a syntax error in a regular expression pattern.
+The last few lessons of this trail explore each class in detail. But first, you must understand how regular
+expressions are actually constructed. Therefore, the next section introduces a simple test harness that will
+be used repeatedly to explore their syntax.
+
+
+
+Predefined Character Classes
+The Pattern API contains a number of useful predefined character classes, which offer convenient shorthands for
+commonly used regular expressions:
+
+
+Construct	Description
+.	Any character (may or may not match line terminators)
+\d	A digit: [0-9]
+\D	A non-digit: [^0-9]
+\s	A whitespace character: [ \t\n\x0B\f\r]
+\S	A non-whitespace character: [^\s]
+\w	A word character: [a-zA-Z_0-9]
+\W	A non-word character: [^\w]
+
+In the table above, each construct in the left-hand column is shorthand for the character class in the right-hand column.
+For example, \d means a range of digits (0-9), and \w means a word character (any lowercase letter, any uppercase letter,
+the underscore character, or any digit).
+Use the predefined classes whenever possible. They make your code easier to read and eliminate errors introduced by
+malformed character classes.
+
+Constructs beginning with a backslash are called escaped constructs.
+
+
+private final String REGEX = "\\d"; // a single digit
+In this example \d is the regular expression; the extra backslash is required for the code to compile.
+The test harness reads the expressions directly from the Console, however, so the extra backslash is unnecessary.
+
+The following examples demonstrate the use of predefined character classes.
+
+
+Enter your regex: .
+Enter input string to search: @
+I found the text "@" starting at index 0 and ending at index 1.
+
+Enter your regex: .
+Enter input string to search: 1
+I found the text "1" starting at index 0 and ending at index 1.
+
+Enter your regex: .
+Enter input string to search: a
+I found the text "a" starting at index 0 and ending at index 1.
+
+Enter your regex: \d
+Enter input string to search: 1
+I found the text "1" starting at index 0 and ending at index 1.
+
+Enter your regex: \d
+Enter input string to search: a
+No match found.
+
+Enter your regex: \D
+Enter input string to search: 1
+No match found.
+
+Enter your regex: \D
+Enter input string to search: a
+I found the text "a" starting at index 0 and ending at index 1.
+
+Enter your regex: \s
+Enter input string to search:
+I found the text " " starting at index 0 and ending at index 1.
+
+Enter your regex: \s
+Enter input string to search: a
+No match found.
+
+Enter your regex: \S
+Enter input string to search:
+No match found.
+
+Enter your regex: \S
+Enter input string to search: a
+I found the text "a" starting at index 0 and ending at index 1.
+
+Enter your regex: \w
+Enter input string to search: a
+I found the text "a" starting at index 0 and ending at index 1.
+
+Enter your regex: \w
+Enter input string to search: !
+No match found.
+
+Enter your regex: \W
+Enter input string to search: a
+No match found.
+
+Enter your regex: \W
+Enter input string to search: !
+I found the text "!" starting at index 0 and ending at index 1.
+
+In the first three examples, the regular expression is simply . (the "dot" metacharacter)
+that indicates "any character." Therefore, the match is successful in all three cases (a randomly selected @ character,
+a digit, and a letter). The remaining examples each use a single regular expression construct from the Predefined
+Character Classes table. You can refer to this table to figure out the logic behind each match:
+
+\d matches all digits
+\s matches spaces
+\w matches word characters
+Alternatively, a capital letter means the opposite:
+
+\D matches non-digits
+\S matches non-spaces
+\W matches non-word characters

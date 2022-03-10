@@ -1,0 +1,39 @@
+Lecture- 137
+
+FAQ: How to populate radiobuttons with items from Java class?
+FAQ: How to populate radiobuttons with items from Java class like we did with selectlist?
+
+You can follow a similar approach that we used for the drop-down list.
+
+Here are the steps
+
+1. Set up the data in your Student class
+
+Add a new field
+
+    private LinkedHashMap<String, String> favoriteLanguageOptions;
+In your constructor, populate the data
+
+        // populate favorite language options
+        favoriteLanguageOptions = new LinkedHashMap<>();
+        // parameter order: value, display label
+        //
+        favoriteLanguageOptions.put("Java", "Java");
+        favoriteLanguageOptions.put("C#", "C#");
+        favoriteLanguageOptions.put("PHP", "PHP");
+        favoriteLanguageOptions.put("Ruby", "Ruby");
+
+
+Add getter method
+
+    public LinkedHashMap<String, String> getFavoriteLanguageOptions() {
+        return favoriteLanguageOptions;
+    }
+2. Reference the data in your form
+
+        Favorite Language:
+
+        <form:radiobuttons path="favoriteLanguage" items="${student.favoriteLanguageOptions}"  />
+
+Source code is available here:
+- https://gist.github.com/darbyluv2code/debb69b1bf8010d84d50e0542e809ffb
